@@ -9,6 +9,18 @@ public class Circle extends Shape{
         this.radius = builder.radius;
     }
 
+    private Circle(Circle target){
+        super(target);
+        
+        if (target != null){
+            this.radius = target.radius;
+        }
+     }
+
+    public Circle clone(){
+        return new Circle(this);
+    }
+
     public float getRadius(){
         return this.radius;
     }

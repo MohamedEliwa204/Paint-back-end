@@ -10,6 +10,18 @@ public class Square extends Shape{
  
     }
 
+    private Square(Square target){
+        super(target);
+        
+        if (target != null){
+            this.edgeLength = target.edgeLength;
+        }
+     }
+
+    public Square clone(){
+        return new Square(this);
+    }
+
     //getters
     public float getEdgeLength(){
         return this.edgeLength;

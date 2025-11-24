@@ -8,6 +8,18 @@ public class LineSegment extends Shape{
         this.length = builder.length;
     }
 
+    private LineSegment(LineSegment target){
+        super(target);
+        
+        if (target != null){
+            this.length = target.length;
+        }
+    }
+
+    public LineSegment clone(){
+        return new LineSegment(this);
+    }
+
     //getters
     public float getLength(){
         return this.length;

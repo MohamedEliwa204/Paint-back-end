@@ -10,6 +10,19 @@ public class Rectangle extends Shape{
         this.height = builder.height;
     }
 
+    private Rectangle(Rectangle target){
+        super(target);
+        
+        if (target != null){
+            this.width = target.width;
+            this.height = target.height;
+        }
+     }
+
+    public Rectangle clone(){
+        return new Rectangle(this);
+    }
+
     //getters
     public float getWidth(){
         return this.width;

@@ -11,6 +11,19 @@ public class Polygon extends Shape{
  
     }
 
+    private Polygon(Polygon target){
+        super(target);
+        
+        if (target != null){
+            this.sidesCount = target.sidesCount;
+            this.edgeLength = target.edgeLength;
+        }
+     }
+
+    public Polygon clone(){
+        return new Polygon(this);
+    }
+
     //getters
     public float getSidesCount(){
         return this.sidesCount;
