@@ -16,6 +16,7 @@ public class Default {
     public static float rx = 10;
     public static float ry = 10;
     public static float radius = 10;
+    public static float polygonRadius = 10;
 
     public static float width = 10;
     public static float height = 10;
@@ -26,6 +27,7 @@ public class Default {
     public static float sidesCount = 3;
 
     public static float length = 10 ;
+
 
     // Setters
 
@@ -63,6 +65,10 @@ public class Default {
 
     public static void setRadius(float newRadius) {
         radius = newRadius;
+    }
+
+    public static void setPolygonRadius(float newPolygonRadius) {
+        polygonRadius = newPolygonRadius;
     }
 
     public static void setWidth(float newWidth) {

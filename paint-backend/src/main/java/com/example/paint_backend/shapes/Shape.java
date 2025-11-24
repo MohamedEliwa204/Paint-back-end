@@ -13,6 +13,8 @@ public abstract class Shape {
 
      private Point center;
 
+     private float rotation;
+
      protected Shape(ShapeBuilder builder) {
           this.strokeWidth = builder.strokeWidth;
           this.strokeFill = builder.strokeFill;
@@ -65,6 +67,10 @@ public abstract class Shape {
           return center;
      }
 
+     public float getRotation() {
+          return rotation;
+     }
+
      // BUILDER CLASS
      public static class ShapeBuilder {
 
@@ -77,6 +83,8 @@ public abstract class Shape {
           private float opacity = Default.opacity;
 
           private Point center = Default.center;
+
+          private float rotation = 0.0f;
 
           public ShapeBuilder setStrokeWidth(float strokeWidth) {
                this.strokeWidth = strokeWidth;
@@ -105,6 +113,11 @@ public abstract class Shape {
 
           public ShapeBuilder setCenter(Point center) {
                this.center = center;
+               return this;
+          }
+
+          public ShapeBuilder setRotation(float rotation) {
+               this.rotation = rotation;
                return this;
           }
 

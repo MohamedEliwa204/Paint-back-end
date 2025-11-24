@@ -3,6 +3,7 @@ package com.example.paint_backend.shapes;
 public class Polygon extends Shape{
     private float sidesCount;
     private float edgeLength;
+    private float radius;
 
     private Polygon(PolygonBuilder builder){
         super(builder);
@@ -33,9 +34,14 @@ public class Polygon extends Shape{
         return this.edgeLength;
     }
 
+    public float getRadius(){
+        return this.radius;
+    }
+
     public static class PolygonBuilder extends ShapeBuilder{
         private float sidesCount = Default.sidesCount;
         private float edgeLength = Default.polygonEdgeLength;
+        private float radius = Default.polygonRadius;
 
         public void setSidesCount(float newSidesCount){
             this.sidesCount = newSidesCount;
@@ -43,6 +49,10 @@ public class Polygon extends Shape{
 
         public void setSide(float newEdgeLength){
             this.edgeLength = newEdgeLength;
+        }
+
+        public void setRadius(float newRadius){
+            this.radius = newRadius;
         }
 
         @Override
