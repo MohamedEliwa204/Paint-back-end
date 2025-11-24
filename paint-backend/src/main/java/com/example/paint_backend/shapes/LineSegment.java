@@ -1,18 +1,20 @@
 package com.example.paint_backend.shapes;
 
-public class LineSegment extends Shape{
-    private float length;
+import org.springframework.data.geo.Point; 
 
-    private LineSegment(LineSegmentBuilder builder){
+public class LineSegment extends Shape{
+    private Point points[];
+
+    protected LineSegment(LineSegmentBuilder builder){
         super(builder);
-        this.length = builder.length;
+        this.points = builder.points;
     }
 
-    private LineSegment(LineSegment target){
+    protected LineSegment(LineSegment target){
         super(target);
         
         if (target != null){
-            this.length = target.length;
+            this.points = target.points;
         }
     }
 
@@ -21,15 +23,15 @@ public class LineSegment extends Shape{
     }
 
     //getters
-    public float getLength(){
-        return this.length;
+    public Point[] getpoints(){
+        return this.points;
     }
 
     public static class LineSegmentBuilder extends ShapeBuilder{
-        private float length = Default.length;
+        private Point points[] = Default.points;
 
-        public void setLength(float newLength){
-            this.length = newLength;
+        public void setpoints(Point[] newpoints){
+            this.points = newpoints;
         }
 
         @Override
@@ -38,3 +40,4 @@ public class LineSegment extends Shape{
         }
     }
 }
+
