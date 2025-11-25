@@ -1,18 +1,22 @@
 package com.example.paint_backend;
 
+import java.io.StringReader;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 import com.example.paint_backend.shapes.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 
 @RestController
 @RequestMapping("/api/paint")              //to be changed
@@ -26,52 +30,7 @@ public class Controller {
     public ResponseEntity<?> draw(@RequestBody Map<String, String> body) {
         try {
 
-            String type = body.get("type");
-
-            // parse core params
-            float x = Float.parseFloat(body.get("x"));
-            float y = Float.parseFloat(body.get("y"));
-            Float p1 = body.get("param1") != null ? Float.parseFloat(body.get("param1")) : null;
-            Float p2 = body.get("param2") != null ? Float.parseFloat(body.get("param2")) : null;
-            Float p3 = body.get("param3") != null ? Float.parseFloat(body.get("param3")) : null;
-
-            // optional points parameter can be provided as a string (comma or space separated)
-            float[] pointsParam = null;
-            if (body.get("points") != null) {
-                pointsParam = parseFloatArray(body.get("points"));
-            }
-
-            Shape.ShapeBuilder drawer = ShapeFactory.createShapeBuilder(type,
-                    x,
-                    y,
-                    p1,
-                    p2,
-                    p3,
-                    pointsParam // Points param
-            );
-
-            // dynamic mapping for builder-level setters (all shapes share these through Shape.ShapeBuilder)
-            Map<String, java.util.function.Consumer<String>> builderSetters = Map.of(
-                    "fill", drawer::setFill,
-                    "opacity", val -> drawer.setOpacity(Float.parseFloat(val)),
-                    "strokeWidth", val -> drawer.setStrokeWidth(Float.parseFloat(val)),
-                    "strokeFill", drawer::setStrokeFill,
-                    "strokeOpacity", val -> drawer.setStrokeOpacity(Float.parseFloat(val)),
-                    "rotation", val -> drawer.setRotation(Float.parseFloat(val))
-            );
-
-            for (Map.Entry<String, String> entry : body.entrySet()) {
-                String key = entry.getKey();
-                String value = entry.getValue();
-
-                if (builderSetters.containsKey(key)) {
-                    builderSetters.get(key).accept(value);
-                }
-            }
-
-            Shape shape = drawer.build();
-            shape.setId(generated_id++);
-            shapesService.putOrUpdate(shape);
+            Shape shape = this.createShape(body);
             return ResponseEntity.ok(shape);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -207,5 +166,155 @@ public class Controller {
         for (int i = 0; i < values.size(); i++) arr[i] = values.get(i);
         return arr;
     }
+
+    private Shape createShape(@RequestBody Map<String, String> body) {
+        try {
+            String type = body.get("type");
+
+            // parse core params
+            float x = Float.parseFloat(body.get("x"));
+            float y = Float.parseFloat(body.get("y"));
+            Float p1 = body.get("param1") != null ? Float.parseFloat(body.get("param1")) : null;
+            Float p2 = body.get("param2") != null ? Float.parseFloat(body.get("param2")) : null;
+            Float p3 = body.get("param3") != null ? Float.parseFloat(body.get("param3")) : null;
+
+            // optional points parameter can be provided as a string (comma or space separated)
+            float[] pointsParam = null;
+            if (body.get("points") != null) {
+                pointsParam = parseFloatArray(body.get("points"));
+            }
+
+            Shape.ShapeBuilder drawer = ShapeFactory.createShapeBuilder(type,
+                    x,
+                    y,
+                    p1,
+                    p2,
+                    p3,
+                    pointsParam // Points param
+            );
+
+
+            Map<String, java.util.function.Consumer<String>> builderSetters = Map.of(
+                    "fill", drawer::setFill,
+                    "opacity", val -> drawer.setOpacity(Float.parseFloat(val)),
+                    "strokeWidth", val -> drawer.setStrokeWidth(Float.parseFloat(val)),
+                    "strokeFill", drawer::setStrokeFill,
+                    "strokeOpacity", val -> drawer.setStrokeOpacity(Float.parseFloat(val)),
+                    "rotation", val -> drawer.setRotation(Float.parseFloat(val))
+            );
+
+            for (Map.Entry<String, String> entry : body.entrySet()) {
+                String key = entry.getKey();
+                String value = entry.getValue();
+
+                if (builderSetters.containsKey(key)) {
+                    builderSetters.get(key).accept(value);
+                }
+            }
+
+            Shape shape = drawer.build();
+            shape.setId(generated_id++);
+            shapesService.putOrUpdate(shape);
+            return shape;
+        } catch (Exception e) {
+            throw new RuntimeException();
+        }
+    }
+
+
+    @PostMapping("/importjson")
+    public ResponseEntity<?> importJson(@RequestBody List<Map<String, String>> shapesBody) {
+        for (Map<String, String> body : shapesBody) {
+            this.createShape(body);
+        }
+        return ResponseEntity.ok(shapesService.getShapesJson());
+    }
+
+    @PostMapping("/exportjson")
+    public ResponseEntity<?> exportJson() {
+
+        return ResponseEntity.ok(shapesService.getShapesJson());
+    }
+
+    @GetMapping(value = "/exportxml", produces = "application/xml")
+    public ResponseEntity<String> getShapesXml() {
+        try {
+            String xml = shapesService.getShapesXml();
+            return ResponseEntity.ok()
+                    .header("Content-Type", "application/xml; charset=UTF-8")
+                    .body(xml);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("Unexpected error occurred: " + e.getMessage());
+        }
+    }
+
+    @PostMapping(value = "/importxml", consumes = "application/xml")
+    public ResponseEntity<?> importXml(@RequestBody String xml) {
+        try {
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            // for safety - disable DTDs
+            try {
+                dbf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+            } catch (Exception ignored) { // Some XML parsers don't support this feature; safe to ignore
+            }
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            Document doc = db.parse(new InputSource(new StringReader(xml)));
+
+            NodeList shapes = doc.getElementsByTagName("shape");
+            for (int i = 0; i < shapes.getLength(); i++) {
+                Element shapeElem = (Element) shapes.item(i);
+                Map<String, String> body = new HashMap<>();
+
+                // type can be attribute or child
+                String type = shapeElem.getAttribute("type");
+                if (type.isEmpty()) type = getChildText(shapeElem, "type");
+                if (type != null) body.put("type", type);
+
+                // common children
+                putIfPresent(shapeElem, body, "x");
+                putIfPresent(shapeElem, body, "y");
+                putIfPresent(shapeElem, body, "fill");
+                putIfPresent(shapeElem, body, "opacity");
+                putIfPresent(shapeElem, body, "strokeWidth");
+                putIfPresent(shapeElem, body, "strokeFill");
+                putIfPresent(shapeElem, body, "strokeOpacity");
+                putIfPresent(shapeElem, body, "rotation");
+
+                // shape-specific
+                putIfPresent(shapeElem, body, "radius");
+                putIfPresent(shapeElem, body, "width");
+                putIfPresent(shapeElem, body, "height");
+                putIfPresent(shapeElem, body, "edgeLength");
+                putIfPresent(shapeElem, body, "rx");
+                putIfPresent(shapeElem, body, "ry");
+                putIfPresent(shapeElem, body, "sidesCount");
+
+                // points - keep as comma separated text
+                String pointsText = getChildText(shapeElem, "points");
+                if (pointsText != null && !pointsText.isEmpty()) {
+                    body.put("points", pointsText.trim());
+                }
+
+                this.createShape(body);
+            }
+
+            return ResponseEntity.ok(shapesService.getShapesJson());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Invalid XML: " + e.getMessage());
+        }
+    }
+
+    private static String getChildText(Element parent, String tag) {
+        NodeList nl = parent.getElementsByTagName(tag);
+        if (nl.getLength() == 0) return null;
+        return nl.item(0).getTextContent().trim();
+    }
+
+    private static void putIfPresent(Element parent, Map<String, String> dest, String tag) {
+        String v = getChildText(parent, tag);
+        if (v != null && !v.isEmpty()) dest.put(tag, v);
+    }
+
 
 }
