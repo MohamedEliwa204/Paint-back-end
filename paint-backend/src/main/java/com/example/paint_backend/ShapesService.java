@@ -16,7 +16,10 @@ public class ShapesService {
 
 
     public void putOrUpdate(Shape shape) {
+        history.push(new HashMap<>(shapes));
+        redoHistory.clear();
         shapes.put(shape.getId(), shape);
+
 
     }
 
@@ -24,8 +27,30 @@ public class ShapesService {
         return shapes.get(id);
     }
 
-    public void remove(int id){
+    public void remove(int id) {
+        history.push(new HashMap<>(shapes));
+        redoHistory.clear();
         shapes.remove(id);
+
     }
+
+    public void undo() {
+
+        redoHistory.add(new HashMap<>(shapes));
+        if (history.isEmpty()) {
+            shapes = new HashMap<>();
+        } else {
+            shapes = new HashMap<>(history.pop());
+        }
+    }
+
+    public void redo() {
+        if (redoHistory.isEmpty()) {
+            return;
+        }
+        history.add(new HashMap<>(shapes));
+        shapes = new HashMap<>(redoHistory.pop());
+    }
+
 }
 
