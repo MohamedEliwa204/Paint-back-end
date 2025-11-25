@@ -171,6 +171,7 @@ public class Controller {
     @PutMapping("/undo")
     public ResponseEntity<String> undo(@RequestBody Map<String, String> body) {
         try {
+            shapesService.undo();
 
             return ResponseEntity.ok("temp");
         } catch (Exception e) {
@@ -182,7 +183,7 @@ public class Controller {
     @PutMapping("/redo")
     public ResponseEntity<String> redo(@RequestBody Map<String, String> body) {
         try {
-
+            shapesService.redo();
             return ResponseEntity.ok("temp");
         } catch (Exception e) {
             return ResponseEntity.internalServerError()
