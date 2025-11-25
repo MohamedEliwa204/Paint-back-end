@@ -38,21 +38,29 @@ public class Polygon extends Shape{
         return this.radius;
     }
 
+    //setters
+    public void setSidesCount(float newSidesCount){
+        this.sidesCount = newSidesCount;
+    }
+
+    public void setEdgeLength(float newEdgeLength){
+        this.edgeLength = newEdgeLength;
+    }
+
+    public void setRadius(float newRadius){
+        this.radius = newRadius;
+    }
+
     public static class PolygonBuilder extends ShapeBuilder{
         private float sidesCount = Default.sidesCount;
         private float edgeLength = Default.polygonEdgeLength;
         private float radius = Default.polygonRadius;
 
-        public void setSidesCount(float newSidesCount){
-            this.sidesCount = newSidesCount;
-        }
-
-        public void setSide(float newEdgeLength){
-            this.edgeLength = newEdgeLength;
-        }
-
-        public void setRadius(float newRadius){
-            this.radius = newRadius;
+        public PolygonBuilder (float x, float y, float sidesCount, float edgeLength, float radius){
+            super(x, y);
+            this.sidesCount = sidesCount;
+            this.edgeLength = edgeLength;
+            this.radius = radius;
         }
 
         @Override

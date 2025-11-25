@@ -32,16 +32,23 @@ public class Rectangle extends Shape{
         return this.height;
     }
 
+    //setters
+    public void setWidth(float newWidth){
+        this.width = newWidth;
+    }
+
+    public void setHeight(float newHeight){
+        this.height = newHeight;
+    }
+
     public static class RectangleBuilder extends ShapeBuilder{
         private float width = Default.width;
         private float height = Default.height;
 
-        public void setWidth(float newWidth){
-            this.width = newWidth;
-        }
-
-        public void setHeight(float newHeight){
-            this.height = newHeight;
+        public RectangleBuilder(float x, float y, float width, float height){
+            super(x, y);
+            this.width = width;
+            this.height = height;
         }
 
         @Override

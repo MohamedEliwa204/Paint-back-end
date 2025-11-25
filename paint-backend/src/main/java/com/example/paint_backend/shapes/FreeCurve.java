@@ -15,6 +15,10 @@ public class FreeCurve extends LineSegment {
 
     public static class FreeCurveBuilder extends LineSegmentBuilder {
 
+        public FreeCurveBuilder(float x, float y, float[] newPoints) {
+            super(x, y, newPoints);
+        }
+
         @Override
         public FreeCurve build() {
             return new FreeCurve(this);

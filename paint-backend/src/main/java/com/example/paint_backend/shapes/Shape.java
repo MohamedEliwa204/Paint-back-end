@@ -11,7 +11,8 @@ public abstract class Shape {
      private String strokeFill;
      private float strokeOpacity;
 
-     private Point center;
+     private float x;
+     private float y;
 
      private float rotation;
 
@@ -23,7 +24,8 @@ public abstract class Shape {
           this.fill = builder.fill;
           this.opacity = builder.opacity;
 
-          this.center = builder.center;
+          this.x = builder.x;
+          this.y = builder.y;
      }
 
      protected Shape(Shape target){
@@ -35,7 +37,8 @@ public abstract class Shape {
                this.fill = target.fill;
                this.opacity = target.opacity;
                
-               this.center = target.center;
+               this.x = target.x;
+               this.y = target.y;
           }
      }
 
@@ -63,12 +66,50 @@ public abstract class Shape {
           return strokeOpacity;
      }
 
-     public Point getCenter() {
-          return center;
+     public float getX() {
+          return x;
+     }
+
+     public float getY() {
+          return y;
      }
 
      public float getRotation() {
           return rotation;
+     }
+
+     // SETTERS
+
+     public void setFill(String fill) {
+          this.fill = fill;
+     }
+
+     public void setOpacity(float opacity) {
+          this.opacity = opacity;
+     }
+
+     public void setStrokeWidth(float strokeWidth) {
+          this.strokeWidth = strokeWidth;
+     }
+
+     public void setStrokeFill(String strokeFill) {
+          this.strokeFill = strokeFill;
+     }
+
+     public void setStrokeOpacity(float strokeOpacity) {
+          this.strokeOpacity = strokeOpacity;
+     }
+
+     public void setX(float x) {
+          this.x = x;
+     }
+
+     public void setY(float y) {
+          this.y = y;
+     }
+
+     public void setRotation(float rotation) {
+          this.rotation = rotation;
      }
 
      // BUILDER CLASS
@@ -82,9 +123,15 @@ public abstract class Shape {
           private String fill = Default.fill;
           private float opacity = Default.opacity;
 
-          private Point center = Default.center;
+          private float x = Default.x;
+          private float y = Default.y;
 
           private float rotation = 0.0f;
+
+          public ShapeBuilder(float x, float y){
+               this.x = x;
+               this.y = y;
+          }
 
           public ShapeBuilder setStrokeWidth(float strokeWidth) {
                this.strokeWidth = strokeWidth;
@@ -111,11 +158,6 @@ public abstract class Shape {
                return this;
           }
 
-          public ShapeBuilder setCenter(Point center) {
-               this.center = center;
-               return this;
-          }
-
           public ShapeBuilder setRotation(float rotation) {
                this.rotation = rotation;
                return this;
@@ -125,7 +167,7 @@ public abstract class Shape {
           // Shape is abstract, so subclasses override this
           public Shape build() {
                throw new UnsupportedOperationException("Cannot create abstract Shape directly.");
-        }
+          }
     }
 
 }

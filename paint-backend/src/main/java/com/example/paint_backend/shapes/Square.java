@@ -27,11 +27,17 @@ public class Square extends Shape{
         return this.edgeLength;
     }
 
+    //setters
+    public void setEdgeLength(float newEdgeLength){
+        this.edgeLength = newEdgeLength;
+    }
+
     public static class SquareBuilder extends ShapeBuilder{
         private float edgeLength = Default.edgeLength;
 
-        public void setEdge(float newEdgeLength){
-            this.edgeLength = newEdgeLength;
+        public SquareBuilder (float x, float y, float edgeLength){
+            super(x, y);
+            this.edgeLength = edgeLength;
         }
 
         @Override

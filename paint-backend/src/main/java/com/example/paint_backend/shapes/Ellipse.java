@@ -33,20 +33,25 @@ public class Ellipse extends Shape {
         return ry;
     }
 
+    //setters
+    public void setRx(float newRx) {
+        this.rx = newRx;
+    }
+
+    public void setRy(float newRy) {
+        this.ry = newRy;
+    }
+
     // BUILDER CLASS
     public static class EllipseBuilder extends ShapeBuilder {
 
         private float rx = Default.rx;
         private float ry = Default.ry;
 
-        public EllipseBuilder setRx(float newRx) {
-            this.rx = newRx;
-            return this;
-        }
-
-        public EllipseBuilder setRy(float newRy) {
-            this.ry = newRy;
-            return this;
+        public EllipseBuilder(float x, float y, float rx, float ry) {
+            super(x, y);
+            this.rx = rx;
+            this.ry = ry;
         }
 
         @Override

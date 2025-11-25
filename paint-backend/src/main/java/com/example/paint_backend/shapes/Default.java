@@ -11,7 +11,8 @@ public class Default {
     public static String strokeFill = "black";
     public static float strokeOpacity = 1.0f;
 
-    public static Point center = new Point(100, 100);
+    public static float x = 100;
+    public static float y = 100;
 
     public static float rx = 10;
     public static float ry = 10;
@@ -26,6 +27,6 @@ public class Default {
 
     public static float sidesCount = 3;
 
-    public static Point points[] = {new Point(200, 200), new Point(250, 250)} ;
+    public static float points[] = {100, 100, 150, 150};
 
 }

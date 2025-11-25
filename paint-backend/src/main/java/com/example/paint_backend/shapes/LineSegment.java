@@ -3,7 +3,7 @@ package com.example.paint_backend.shapes;
 import org.springframework.data.geo.Point; 
 
 public class LineSegment extends Shape{
-    private Point points[];
+    private float points[];
 
     protected LineSegment(LineSegmentBuilder builder){
         super(builder);
@@ -23,15 +23,21 @@ public class LineSegment extends Shape{
     }
 
     //getters
-    public Point[] getpoints(){
+    public float[] getpoints(){
         return this.points;
     }
 
-    public static class LineSegmentBuilder extends ShapeBuilder{
-        private Point points[] = Default.points;
+    //setters
+    public void setpoints(float[] newpoints){
+        this.points = newpoints;
+    }
 
-        public void setpoints(Point[] newpoints){
-            this.points = newpoints;
+    public static class LineSegmentBuilder extends ShapeBuilder{
+        private float points[] = Default.points;
+
+        public LineSegmentBuilder(float x, float y, float[] newPoints){
+            super(x, y);
+            this.points = newPoints;
         }
 
         @Override
