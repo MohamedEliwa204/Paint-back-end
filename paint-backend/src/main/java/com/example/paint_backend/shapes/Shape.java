@@ -4,170 +4,180 @@ import org.springframework.data.geo.Point;
 
 public abstract class Shape {
 
-     private String fill;
-     private float opacity;
+    private int id;
+    private String fill;
+    private float opacity;
 
-     private float strokeWidth;
-     private String strokeFill;
-     private float strokeOpacity;
+    private float strokeWidth;
+    private String strokeFill;
+    private float strokeOpacity;
 
-     private float x;
-     private float y;
+    private float x;
+    private float y;
 
-     private float rotation;
+    private float rotation;
 
-     protected Shape(ShapeBuilder builder) {
-          this.strokeWidth = builder.strokeWidth;
-          this.strokeFill = builder.strokeFill;
-          this.strokeOpacity = builder.strokeOpacity;
+    protected Shape(ShapeBuilder builder) {
+        this.strokeWidth = builder.strokeWidth;
+        this.strokeFill = builder.strokeFill;
+        this.strokeOpacity = builder.strokeOpacity;
 
-          this.fill = builder.fill;
-          this.opacity = builder.opacity;
+        this.fill = builder.fill;
+        this.opacity = builder.opacity;
 
-          this.x = builder.x;
-          this.y = builder.y;
-     }
+        this.x = builder.x;
+        this.y = builder.y;
+    }
 
-     protected Shape(Shape target){
-          if (target != null){
-               this.strokeWidth = target.strokeWidth;
-               this.strokeFill = target.strokeFill;
-               this.strokeOpacity = target.strokeOpacity;
-               
-               this.fill = target.fill;
-               this.opacity = target.opacity;
-               
-               this.x = target.x;
-               this.y = target.y;
-          }
-     }
+    protected Shape(Shape target) {
+        if (target != null) {
+            this.strokeWidth = target.strokeWidth;
+            this.strokeFill = target.strokeFill;
+            this.strokeOpacity = target.strokeOpacity;
 
-     public abstract Shape clone();
+            this.fill = target.fill;
+            this.opacity = target.opacity;
 
-     // GETTERS
+            this.x = target.x;
+            this.y = target.y;
+        }
+    }
 
-     public String getFill() {
-          return fill;
-     }
+    public abstract Shape clone();
 
-     public float getOpacity() {
-          return opacity;
-     }
+    // GETTERS
 
-     public float getStrokeWidth() {
-          return strokeWidth;
-     }
+    public String getFill() {
+        return fill;
+    }
 
-     public String getStrokeFill() {
-          return strokeFill;
-     }
+    public float getOpacity() {
+        return opacity;
+    }
 
-     public float getStrokeOpacity() {
-          return strokeOpacity;
-     }
+    public float getStrokeWidth() {
+        return strokeWidth;
+    }
 
-     public float getX() {
-          return x;
-     }
+    public String getStrokeFill() {
+        return strokeFill;
+    }
 
-     public float getY() {
-          return y;
-     }
+    public float getStrokeOpacity() {
+        return strokeOpacity;
+    }
 
-     public float getRotation() {
-          return rotation;
-     }
+    public float getX() {
+        return x;
+    }
 
-     // SETTERS
+    public float getY() {
+        return y;
+    }
 
-     public void setFill(String fill) {
-          this.fill = fill;
-     }
+    public float getRotation() {
+        return rotation;
+    }
 
-     public void setOpacity(float opacity) {
-          this.opacity = opacity;
-     }
+    // SETTERS
 
-     public void setStrokeWidth(float strokeWidth) {
-          this.strokeWidth = strokeWidth;
-     }
+    public void setFill(String fill) {
+        this.fill = fill;
+    }
 
-     public void setStrokeFill(String strokeFill) {
-          this.strokeFill = strokeFill;
-     }
+    public void setOpacity(float opacity) {
+        this.opacity = opacity;
+    }
 
-     public void setStrokeOpacity(float strokeOpacity) {
-          this.strokeOpacity = strokeOpacity;
-     }
+    public void setStrokeWidth(float strokeWidth) {
+        this.strokeWidth = strokeWidth;
+    }
 
-     public void setX(float x) {
-          this.x = x;
-     }
+    public void setStrokeFill(String strokeFill) {
+        this.strokeFill = strokeFill;
+    }
 
-     public void setY(float y) {
-          this.y = y;
-     }
+    public void setStrokeOpacity(float strokeOpacity) {
+        this.strokeOpacity = strokeOpacity;
+    }
 
-     public void setRotation(float rotation) {
-          this.rotation = rotation;
-     }
+    public void setX(float x) {
+        this.x = x;
+    }
 
-     // BUILDER CLASS
-     public static class ShapeBuilder {
+    public void setId(int id) {
+        this.id = id;
 
-          // Default values — can be changed using Default class
-          private float strokeWidth = Default.strokeWidth;
-          private String strokeFill = Default.strokeFill;
-          private float strokeOpacity = Default.strokeOpacity;
+    }
 
-          private String fill = Default.fill;
-          private float opacity = Default.opacity;
+    public int getId() {
+        return this.id;
+    }
 
-          private float x = Default.x;
-          private float y = Default.y;
+    public void setY(float y) {
+        this.y = y;
+    }
 
-          private float rotation = 0.0f;
+    public void setRotation(float rotation) {
+        this.rotation = rotation;
+    }
 
-          public ShapeBuilder(float x, float y){
-               this.x = x;
-               this.y = y;
-          }
+    // BUILDER CLASS
+    public static class ShapeBuilder {
 
-          public ShapeBuilder setStrokeWidth(float strokeWidth) {
-               this.strokeWidth = strokeWidth;
-               return this;
-          }
+        // Default values — can be changed using Default class
+        private float strokeWidth = Default.strokeWidth;
+        private String strokeFill = Default.strokeFill;
+        private float strokeOpacity = Default.strokeOpacity;
 
-          public ShapeBuilder setStrokeFill(String strokeFill) {
-               this.strokeFill = strokeFill;
-               return this;
-          }
+        private String fill = Default.fill;
+        private float opacity = Default.opacity;
 
-          public ShapeBuilder setStrokeOpacity(float strokeOpacity) {
-               this.strokeOpacity = strokeOpacity;
-               return this;
-          }
+        private float x = Default.x;
+        private float y = Default.y;
 
-          public ShapeBuilder setFill(String fill) {
-               this.fill = fill;
-               return this;
-          }
+        private float rotation = 0.0f;
 
-          public ShapeBuilder setOpacity(float opacity) {
-               this.opacity = opacity;
-               return this;
-          }
+        public ShapeBuilder(float x, float y) {
+            this.x = x;
+            this.y = y;
+        }
 
-          public ShapeBuilder setRotation(float rotation) {
-               this.rotation = rotation;
-               return this;
-          }
+        public ShapeBuilder setStrokeWidth(float strokeWidth) {
+            this.strokeWidth = strokeWidth;
+            return this;
+        }
 
-          // ─────────── BUILD METHOD ───────────
-          // Shape is abstract, so subclasses override this
-          public Shape build() {
-               throw new UnsupportedOperationException("Cannot create abstract Shape directly.");
-          }
+        public ShapeBuilder setStrokeFill(String strokeFill) {
+            this.strokeFill = strokeFill;
+            return this;
+        }
+
+        public ShapeBuilder setStrokeOpacity(float strokeOpacity) {
+            this.strokeOpacity = strokeOpacity;
+            return this;
+        }
+
+        public ShapeBuilder setFill(String fill) {
+            this.fill = fill;
+            return this;
+        }
+
+        public ShapeBuilder setOpacity(float opacity) {
+            this.opacity = opacity;
+            return this;
+        }
+
+        public ShapeBuilder setRotation(float rotation) {
+            this.rotation = rotation;
+            return this;
+        }
+
+        // ─────────── BUILD METHOD ───────────
+        // Shape is abstract, so subclasses override this
+        public Shape build() {
+            throw new UnsupportedOperationException("Cannot create abstract Shape directly.");
+        }
     }
 
 }
