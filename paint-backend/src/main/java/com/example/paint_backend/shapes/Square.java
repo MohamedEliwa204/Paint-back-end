@@ -22,12 +22,10 @@ public class Square extends Shape{
         return new Square(this);
     }
 
-    //getters
     public float getEdgeLength(){
         return this.edgeLength;
     }
 
-    //setters
     public void setEdgeLength(float newEdgeLength){
         this.edgeLength = newEdgeLength;
     }

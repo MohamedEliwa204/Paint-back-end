@@ -23,8 +23,6 @@ public class Ellipse extends Shape {
     public Ellipse clone() {
         return new Ellipse(this);
     }
-
-    //getters
     public float getRx() {
         return rx;
     }
@@ -33,7 +31,6 @@ public class Ellipse extends Shape {
         return ry;
     }
 
-    //setters
     public void setRx(float newRx) {
         this.rx = newRx;
     }
@@ -42,7 +39,6 @@ public class Ellipse extends Shape {
         this.ry = newRy;
     }
 
-    // BUILDER CLASS
     public static class EllipseBuilder extends ShapeBuilder {
 
         private float rx = Default.rx;

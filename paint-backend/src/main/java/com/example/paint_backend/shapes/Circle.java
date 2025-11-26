@@ -21,17 +21,14 @@ public class Circle extends Shape{
         return new Circle(this);
     }
 
-    //getters
     public float getRadius(){
         return this.radius;
     }
 
-    //setters
     public void setRadius(float newRadius){
         this.radius = newRadius;
     }
 
-    //builder
     public static class CircleBuilder extends ShapeBuilder{
         private float radius = Default.radius;
 

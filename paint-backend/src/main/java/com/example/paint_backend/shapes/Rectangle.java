@@ -23,7 +23,6 @@ public class Rectangle extends Shape{
         return new Rectangle(this);
     }
 
-    //getters
     public float getWidth(){
         return this.width;
     }
@@ -32,7 +31,6 @@ public class Rectangle extends Shape{
         return this.height;
     }
 
-    //setters
     public void setWidth(float newWidth){
         this.width = newWidth;
     }

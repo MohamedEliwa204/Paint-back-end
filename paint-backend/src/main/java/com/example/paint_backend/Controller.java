@@ -265,12 +265,11 @@ public class Controller {
                 Element shapeElem = (Element) shapes.item(i);
                 Map<String, String> body = new HashMap<>();
 
-                // type can be attribute or child
+
                 String type = shapeElem.getAttribute("type");
                 if (type.isEmpty()) type = getChildText(shapeElem, "type");
                 if (type != null) body.put("type", type);
 
-                // common children
                 putIfPresent(shapeElem, body, "x");
                 putIfPresent(shapeElem, body, "y");
                 putIfPresent(shapeElem, body, "fill");
@@ -280,7 +279,7 @@ public class Controller {
                 putIfPresent(shapeElem, body, "strokeOpacity");
                 putIfPresent(shapeElem, body, "rotation");
 
-                // shape-specific
+
                 putIfPresent(shapeElem, body, "radius");
                 putIfPresent(shapeElem, body, "width");
                 putIfPresent(shapeElem, body, "height");
@@ -289,7 +288,7 @@ public class Controller {
                 putIfPresent(shapeElem, body, "ry");
                 putIfPresent(shapeElem, body, "sidesCount");
 
-                // points - keep as comma separated text
+
                 String pointsText = getChildText(shapeElem, "points");
                 if (pointsText != null && !pointsText.isEmpty()) {
                     body.put("points", pointsText.trim());

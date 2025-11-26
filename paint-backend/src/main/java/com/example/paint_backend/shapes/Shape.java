@@ -45,7 +45,6 @@ public abstract class Shape {
 
     public abstract Shape clone();
 
-    // GETTERS
 
     public String getFill() {
         return fill;
@@ -79,7 +78,6 @@ public abstract class Shape {
         return rotation;
     }
 
-    // SETTERS
 
     public void setFill(String fill) {
         this.fill = fill;
@@ -122,10 +120,8 @@ public abstract class Shape {
         this.rotation = rotation;
     }
 
-    // BUILDER CLASS
     public static class ShapeBuilder {
 
-        // Default values — can be changed using Default class
         private float strokeWidth = Default.strokeWidth;
         private String strokeFill = Default.strokeFill;
         private float strokeOpacity = Default.strokeOpacity;
@@ -173,8 +169,6 @@ public abstract class Shape {
             return this;
         }
 
-        // ─────────── BUILD METHOD ───────────
-        // Shape is abstract, so subclasses override this
         public Shape build() {
             throw new UnsupportedOperationException("Cannot create abstract Shape directly.");
         }

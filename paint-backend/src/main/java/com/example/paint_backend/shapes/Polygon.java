@@ -25,7 +25,6 @@ public class Polygon extends Shape{
         return new Polygon(this);
     }
 
-    //getters
     public float getSidesCount(){
         return this.sidesCount;
     }
@@ -38,7 +37,6 @@ public class Polygon extends Shape{
         return this.radius;
     }
 
-    //setters
     public void setSidesCount(float newSidesCount){
         this.sidesCount = newSidesCount;
     }
