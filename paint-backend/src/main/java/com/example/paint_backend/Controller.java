@@ -64,36 +64,36 @@ public class Controller {
 
 
             if (shape instanceof Circle) {
-                com.example.paint_backend.shapes.Circle c = (com.example.paint_backend.shapes.Circle) shape;
+                Circle c = (Circle) shape;
                 setters.put("radius", val -> c.setRadius(Float.parseFloat(val)));
             }
 
             if (shape instanceof Rectangle) {
-                com.example.paint_backend.shapes.Rectangle r = (com.example.paint_backend.shapes.Rectangle) shape;
+                Rectangle r = (Rectangle) shape;
                 setters.put("width", val -> r.setWidth(Float.parseFloat(val)));
                 setters.put("height", val -> r.setHeight(Float.parseFloat(val)));
             }
 
             if (shape instanceof Square) {
-                com.example.paint_backend.shapes.Square s = (com.example.paint_backend.shapes.Square) shape;
+                Square s = (Square) shape;
                 setters.put("edgeLength", val -> s.setEdgeLength(Float.parseFloat(val)));
             }
 
             if (shape instanceof Ellipse) {
-                com.example.paint_backend.shapes.Ellipse e = (com.example.paint_backend.shapes.Ellipse) shape;
+                Ellipse e = (Ellipse) shape;
                 setters.put("rx", val -> e.setRx(Float.parseFloat(val)));
                 setters.put("ry", val -> e.setRy(Float.parseFloat(val)));
             }
 
             if (shape instanceof Polygon) {
-                com.example.paint_backend.shapes.Polygon p = (com.example.paint_backend.shapes.Polygon) shape;
+                Polygon p = (Polygon) shape;
                 setters.put("sidesCount", val -> p.setSidesCount(Float.parseFloat(val)));
                 setters.put("edgeLength", val -> p.setEdgeLength(Float.parseFloat(val)));
                 setters.put("radius", val -> p.setRadius(Float.parseFloat(val)));
             }
 
             if (shape instanceof LineSegment) {
-                com.example.paint_backend.shapes.LineSegment l = (com.example.paint_backend.shapes.LineSegment) shape;
+                LineSegment l = (LineSegment) shape;
                 setters.put("points", val -> l.setpoints(parseFloatArray(val)));
             }
 
