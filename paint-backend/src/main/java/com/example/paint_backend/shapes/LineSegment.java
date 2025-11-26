@@ -22,12 +22,10 @@ public class LineSegment extends Shape{
         return new LineSegment(this);
     }
 
-    //getters
     public float[] getpoints(){
         return this.points;
     }
 
-    //setters
     public void setpoints(float[] newpoints){
         this.points = newpoints;
     }
